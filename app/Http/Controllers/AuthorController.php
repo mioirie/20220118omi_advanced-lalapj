@@ -9,7 +9,7 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        $items = DB::select('select * from authors');
+        $items = DB::table('authors')->get();
         return view('index', ['items' => $items]);
     }
     public function add()
@@ -21,15 +21,15 @@ class AuthorController extends Controller
         $param = [
             'name' => $request->name,
             'age' => $request->age,
+            'nationality' => $request->nationality,
         ];
-        DB::insert('insert into authors (name, age) values (:name, :age)', $param);
+        DB::table('authors')->insert($param);
         return redirect('/');
     }
     public function edit(Request $request)
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from authors where id = :id', $param);
-        return view('edit', ['form' => $item[0]]);
+        $item = DB::table('authors')->where('id', $request->id)->first();
+        return view('edit', ['form' => $item]);
     }
     public function update(Request $request)
     {
@@ -37,20 +37,20 @@ class AuthorController extends Controller
             'id' => $request->id,
             'name' => $request->name,
             'age' => $request->age,
+            'nationality' => $request->nationality,
         ];
-        DB::update('update authors set name =:name, age =:age where id =:id', $param);
+        DB::table('authors')->where('id', $request->id)->update($param);
         return redirect('/');
     }
-    public function delete(Request $request)
+     public function delete(Request $request)
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from authors where id = :id', $param);
-        return view('delete', ['form' => $item[0]]);
+        $item = DB::table('authors')->where('id', $request->id)->first();
+        return view('delete', ['form' => $item]);
     }
     public function remove(Request $request)
     {
         $param = ['id' => $request->id];
-        DB::delete('delete from authors where id =:id', $param);
+        DB::table('authors')->where('id', $request->id)->delete();
         return redirect('/');
     }
 }
