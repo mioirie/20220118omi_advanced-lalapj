@@ -11,7 +11,7 @@
 
 @section('content')
 <p>セッションに保存した値:{{ $data }}</p>
-  <form action="/session" method="post">
+  <form action="/book/session" method="post">
     @csrf
     <input type="text" name="input">
     <button>送信</button>

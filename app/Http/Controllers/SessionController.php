@@ -15,6 +15,6 @@ class SessionController extends Controller
     {
         $txt = $request->input;
         $request->session()->put('txt',$txt);
-        return redirect('/session');
+        return redirect('book/session');
     }
 }

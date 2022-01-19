@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Models\Author;
 
 class AuthorController extends Controller
 {
     public function index()
     {
-        $items = Author::all();
+        $items = Author::Paginate(4);
         return view('index', ['items' => $items]);
     }
     public function find()
